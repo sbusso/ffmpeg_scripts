@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+FILE=$1
+DURATION=$2
+bc -l <<< "$DURATION / $(mediainfo --Output='Video;%FrameCount%' $FILE)"

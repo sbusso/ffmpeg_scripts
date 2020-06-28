@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+IN=$1
+OUT=$2
+OVER=$3
+OVER_START=$4
+OUTRO=$5
+DURATION=$(get_vid_duration $IN)
+FADE_OUT_DURATION=$6
+FADE_IN_DURATION=$7
+FADE_OUT_START=$(bc -l <<< "$DURATION - $FADE_OUT_DURATION")
+MILLI=${OVER_START}000
+
+ffmpeg -i $IN -i $OUTRO -filter_complex \
+    "[0:v]setpts=PTS-STARTPTS[v0];
+    movie=$OVER:s=dv+da[overv][overa];
+    [overv]setpts=PTS-STARTPTS+$OVER_START/TB[v1];
+    [v0][v1]overlay=-600:0:eof_action=pass,fade=t=in:st=0:d=$FADE_IN_DURATION,fade=t=out:st=$FADE_OUT_START:d=$FADE_OUT_DURATION[mainv];
+    [overa]adelay=$MILLI|$MILLI,volume=0.5[a1];
+    [0:a:0][0:a:1][a1]amix=inputs=3:duration=longest:dropout_transition=0:weights=3 3 1[maina];
+    [mainv][maina][1:v][1:a]concat=n=2:v=1:a=1[outv][outa]" \
+    -map "[outv]" -map "[outa]" $OUT

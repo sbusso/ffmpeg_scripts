@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+COUNT=command -v yay >/dev/null 2>&1 && yay -Qu | wc -l || pacman -Qu | wc -l
+echo $COUNT

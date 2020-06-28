@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+IN=$1
+NOISE=$2
+DURATION=$3
+
+ffmpeg -hide_banner -nostats -an -i $IN -vf "freezedetect=n=${NOISE}dB:d=${DURATION}" -f null - 2>&1 | grep -e "freeze_start" -e "freeze_end"

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+IN=$1
+OUT=$2
+
+ffmpeg -an -i $IN -c copy $OUT

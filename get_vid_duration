@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+IN=$1
+
+ffprobe -i $IN -show_entries format=duration -v quiet -of csv="p=0"

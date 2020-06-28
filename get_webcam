@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+TARGET=$1
+
+v4l2-ctl --list-devices | grep $TARGET -A 1 | grep /dev/video. -o

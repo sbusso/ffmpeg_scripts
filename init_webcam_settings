@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+DEVICE=$(get_webcam C920)
+
+if [ ! -z $DEVICE ]; then
+    v4l2-ctl -d $DEVICE --set-ctrl=exposure_auto=0
+    v4l2-ctl -d $DEVICE --set-ctrl=exposure_absolute=400
+    v4l2-ctl -d $DEVICE --set-ctrl=brightness=128
+    v4l2-ctl -d $DEVICE --set-ctrl=saturation=170
+    v4l2-ctl -d $DEVICE --set-ctrl=contrast=128
+    v4l2-ctl -d $DEVICE --set-ctrl=sharpness=170
+    v4l2-ctl -d $DEVICE --set-ctrl=white_balance_temperature_auto=1
+fi

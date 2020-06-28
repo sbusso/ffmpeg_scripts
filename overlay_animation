@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+IN=$1
+OVER=$2
+OUT=$3
+START=$4
+MILLI=${START}000
+
+ffmpeg -i $IN -filter_complex \
+"[0:v]setpts=PTS-STARTPTS[v0];
+movie=$OVER:s=dv+da[overv][overa];
+[overv]setpts=PTS-STARTPTS+$START/TB[v1];
+[v0][v1]overlay=-600:0:eof_action=pass[out1];
+[overa]adelay=$MILLI|$MILLI,volume=0.5[a1];
+[0:a:0][0:a:1][a1]amix=inputs=3:duration=longest:dropout_transition=0:weights=3 3 1[outa]" \
+-map "[out1]" -map "[outa]" $OUT

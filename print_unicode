@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+for CODE in $@; do
+    printf "%s - \u$CODE\n" $CODE
+done
+
+exit $?

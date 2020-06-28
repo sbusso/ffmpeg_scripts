@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+INPUT=$1
+OUTPUT=$2
+DURATION=$3
+
+ffmpeg -i $INPUT -vf "setpts=N/$(get_frame_rate $INPUT $DURATION)/TB" $OUTPUT

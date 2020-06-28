@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+LIST=$1
+OUT=$2
+
+ffmpeg -f concat -safe 0 -i $LIST -c copy $OUT

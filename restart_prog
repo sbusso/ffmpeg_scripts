@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+PROG=$1
+
+killall $PROG
+
+$PROG &
+
+notify-send -u normal "$PROG was restarted"
